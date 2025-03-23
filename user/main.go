@@ -1,10 +1,10 @@
 package main
 
 import (
-	"airtickets/internal/entity/model"
-	"airtickets/internal/infrastructure/config"
-	"airtickets/internal/infrastructure/db"
-	user_repo "airtickets/internal/repository/user"
+	"github.com/elzamin/air_tickets/user/internal/entity/model"
+	"github.com/elzamin/air_tickets/user/internal/infrastructure/config"
+	"github.com/elzamin/air_tickets/user/internal/infrastructure/db"
+	user_repo "github.com/elzamin/air_tickets/user/internal/repository/user"
 	"context"
 	"log"
 	"os"

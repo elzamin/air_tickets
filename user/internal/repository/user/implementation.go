@@ -1,7 +1,7 @@
 package user
 
 import (
-	"airtickets/internal/entity/model"
+	"github.com/elzamin/air_tickets/user/internal/entity/model"
 	"context"
 
 	"github.com/jackc/pgx/v5/pgxpool"
