@@ -7,10 +7,10 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/pkg/errors"
-	"github.com/elzamin/air_tickets/user/internal/infrastructure/config"
+	"github.com/elzamin/air_tickets/user/internal/infrastructure/model"
 )
 
-func NewPostgres(cfg config.Postgres) (*pgxpool.Pool, error) {
+func NewPostgres(cfg model.Postgres) (*pgxpool.Pool, error) {
 	conn := fmt.Sprintf("host=%v port=%v user=%v dbname=%v password=%v sslmode=disable",
 		cfg.Host,
 		cfg.Port,
