@@ -1,8 +1,9 @@
 package user
 
 import (
-	"github.com/elzamin/air_tickets/user/internal/entity"
 	"context"
+
+	"github.com/elzamin/air_tickets/user/internal/entity"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -61,6 +62,28 @@ func (r *repository) Get(ctx context.Context, id string) (entity.User, error) {
 	}
 
 	return user, nil
+}
+
+func (r *repository) GetAll(ctx context.Context) ([]entity.User, error) {
+	rows, err := r.db.Query(
+		ctx,
+		"SELECT id, first_name, last_name FROM userr",
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	var users []entity.User
+	for rows.Next() {
+		var u entity.User
+		err = rows.Scan(&u.Id, &u.FirstName, &u.LastName)
+		if err !=nil {
+			return nil, err
+		}
+		users = append(users, u)
+	}
+
+	return users, nil
 }
 
 func (r *repository) Update(ctx context.Context, user entity.User) error {

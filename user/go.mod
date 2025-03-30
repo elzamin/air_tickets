@@ -9,6 +9,14 @@ require (
 )
 
 require (
+	golang.org/x/net v0.34.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250115164207-1a7da9e5054f // indirect
+	google.golang.org/grpc v1.71.0 // indirect
+	google.golang.org/protobuf v1.36.6 // indirect
+)
+
+require (
+	github.com/elzamin/air_tickets/proto/gen/go v1.0.0
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
@@ -29,3 +37,5 @@ require (
 	golang.org/x/text v0.21.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/elzamin/air_tickets/proto/gen/go v1.0.0 => /Users/elzamin/projects/pet_project/air_tickets/proto/gen/go

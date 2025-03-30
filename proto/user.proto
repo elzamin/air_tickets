@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/elzamin/air_tickets/user";
+
+service User {
+    rpc PostUser (PostUserRequest) returns (PostUserResponse);
+    rpc GetUser (GetUserRequest) returns (GetUserResponse);
+    rpc GetUsers (GetUsersRequest) returns (GetUsersResponse);
+    rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
+    rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse);
+}
+
+message UserDTO {
+    string id = 1;
+    string name = 2;
+    int32 age = 3;
+    string address = 4;
+    string work = 5;
+}
+
+message Error {
+    string message = 1;
+}
+
+message GetUsersRequest {}
+
+message GetUsersResponse {
+    repeated UserDTO users = 1;
+    Error error = 2;
+}
+
+message PostUserRequest {
+    UserDTO user = 1;
+}
+
+message PostUserResponse {
+    Error error = 1;
+}
+
+message GetUserRequest {
+    string id = 1;
+}
+
+message GetUserResponse {
+    UserDTO user = 1;
+    Error error = 2
+}
+
+message DeleteUserRequest{
+    string id = 1;
+}
+
+message DeleteUserResponse{
+    Error error = 1;
+}
+
+message UpdateUserRequest{
+    UserDTO user = 1;
+}
+
+message UpdateUserResponse{
+    UserDTO user = 1;
+    Error error = 2;
+}
+
+
