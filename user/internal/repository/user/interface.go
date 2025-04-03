@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/elzamin/air_tickets/user/internal/entity"
 	"context"
+	"github.com/elzamin/air_tickets/user/internal/entity"
 )
 
 type Repository interface {

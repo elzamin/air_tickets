@@ -1,15 +1,16 @@
 package main
 
 import (
-	user_grpc "github.com/elzamin/air_tickets/proto/gen/go/user"
-	"github.com/elzamin/air_tickets/user/internal/entity"
+	"fmt"
+	"log"
+	"os"
+	//"net"
+	user_grpc "github.com/elzamin/air_tickets/proto/gen/go"
 	"github.com/elzamin/air_tickets/user/internal/infrastructure/config"
 	"github.com/elzamin/air_tickets/user/internal/infrastructure/db"
 	user_repo "github.com/elzamin/air_tickets/user/internal/repository/user"
-	"context"
-	"log"
-	"os"
-	"fmt"
+	//"github.com/elzamin/air_tickets/user/internal/test"
+	"google.golang.org/grpc"
 )
 
 func main() {
@@ -18,58 +19,32 @@ func main() {
 		log.Fatal("Failed to init a config", err)
 	}
 
+	dbConnection, err := db.NewPostgres(cfg.Postgres)
+	if err != nil {
+		log.Fatal("Failed to create postgres connections", err)
+	}
+	userRepository := user_repo.New(dbConnection)
+	_ = userRepository
+
+	//test.TestUserDb(userRepository)
+
 	a := user_grpc.GetUserRequest{
 		Id: "1",
 	}
 	fmt.Println(a.Id)
 
-	dbConnection, err := db.NewPostgres(cfg.Postgres)
+	//lis, err := net.Listen("tcp", fmt.Sprint("localhost:8080"))
 	if err != nil {
-		log.Fatal("Failed to create postgres connections", err)
+		log.Fatalf("failed to listen: %v", err)
 	}
-
-	userRepository := user_repo.New(dbConnection)
-
-	ctx := context.Background()
-	err = userRepository.TouchTable(ctx)
+	grpcServer, err:= grpc.NewClient("passthrough:///localhost:8081")
 	if err != nil {
-		log.Fatal("Failed to touch table user", err)
+		log.Fatal("Failed to dial the server", err)
 	}
+	defer grpcServer.Close()
 
-	err = userRepository.Create(ctx, entity.User{Id: "1", FirstName: "Elzamin", LastName: "Usubaliev"})
-	if err != nil {
-		log.Fatal("Failed to create user", err)
-	}
-
-	user, err := userRepository.Get(ctx, "1")
-	if err != nil {
-		log.Fatal("Failed to get user", err)
-	}
-	log.Println(user)
-
-	err = userRepository.Update(ctx, entity.User{Id: "1", FirstName: "Vasya", LastName: "Veseliy"})
-	if err != nil {
-		log.Fatal("Failed to update user", err)
-	}
-
-	user, err = userRepository.Get(ctx, "1")
-	if err != nil {
-		log.Fatal("Failed to get user", err)
-	}
-	log.Println(user)
-
-	err = userRepository.Create(ctx, entity.User{Id: "2", FirstName: "Elzamin", LastName: "Usubaliev"})
-	if err != nil {
-		log.Fatal("Failed to create user", err)
-	}
-
-	users, _ := userRepository.GetAll(ctx)
-	log.Println(users)
-
-	err = userRepository.Delete(ctx, "1")
-	if err != nil {
-		log.Fatal("Failed to delete user", err)
-	}
+	user_grpc.NewUserClient(grpcServer)
+	
 
 	// log.Fatal(http.ListenAndServe(cfg.Server.Host, nil))
 }

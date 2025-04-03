@@ -72,12 +72,13 @@ func (r *repository) GetAll(ctx context.Context) ([]entity.User, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 
 	var users []entity.User
 	for rows.Next() {
 		var u entity.User
 		err = rows.Scan(&u.Id, &u.FirstName, &u.LastName)
-		if err !=nil {
+		if err != nil {
 			return nil, err
 		}
 		users = append(users, u)
@@ -98,7 +99,7 @@ func (r *repository) Update(ctx context.Context, user entity.User) error {
 	return err
 }
 
-func (r *repository) Delete(ctx context.Context, id string) error{
+func (r *repository) Delete(ctx context.Context, id string) error {
 	_, err := r.db.Exec(
 		ctx,
 		"DELETE FROM userr WHERE id = $1",

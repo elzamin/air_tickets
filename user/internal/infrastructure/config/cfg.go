@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/spf13/viper"
 	"github.com/elzamin/air_tickets/user/internal/infrastructure/model"
+	"github.com/spf13/viper"
 )
 
 func New(path string) (model.Config, error) {
@@ -13,12 +13,12 @@ func New(path string) (model.Config, error) {
 	}
 
 	return model.Config{
-		Server: model.Server {
+		Server: model.Server{
 			Host: viper.GetString("server.host"),
 		},
 		Postgres: model.Postgres{
-			Host: viper.GetString("postgres.host"),
-			Port: viper.GetString("postgres.port"),
+			Host:     viper.GetString("postgres.host"),
+			Port:     viper.GetString("postgres.port"),
 			Username: viper.GetString("postgres.username"),
 			Database: viper.GetString("postgres.dbname"),
 			Password: viper.GetString("postgres.password"),

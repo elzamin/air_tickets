@@ -6,8 +6,8 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/pkg/errors"
 	"github.com/elzamin/air_tickets/user/internal/infrastructure/model"
+	"github.com/pkg/errors"
 )
 
 func NewPostgres(cfg model.Postgres) (*pgxpool.Pool, error) {

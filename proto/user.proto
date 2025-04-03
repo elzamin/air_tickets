@@ -5,7 +5,7 @@ package user;
 option go_package = "github.com/elzamin/air_tickets/user";
 
 service User {
-    rpc PostUser (PostUserRequest) returns (PostUserResponse);
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
     rpc GetUser (GetUserRequest) returns (GetUserResponse);
     rpc GetUsers (GetUsersRequest) returns (GetUsersResponse);
     rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
@@ -31,11 +31,11 @@ message GetUsersResponse {
     Error error = 2;
 }
 
-message PostUserRequest {
+message CreateUserRequest {
     UserDTO user = 1;
 }
 
-message PostUserResponse {
+message CreateUserResponse {
     Error error = 1;
 }
 
@@ -45,7 +45,7 @@ message GetUserRequest {
 
 message GetUserResponse {
     UserDTO user = 1;
-    Error error = 2
+    Error error = 2;
 }
 
 message DeleteUserRequest{

@@ -1,6 +1,6 @@
 package model
 
 type Config struct {
-	Server Server
+	Server   Server
 	Postgres Postgres
 }
