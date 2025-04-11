@@ -3,13 +3,12 @@ package test
 import (
 	"context"
 	"github.com/elzamin/air_tickets/user/internal/entity"
-	user_repo "github.com/elzamin/air_tickets/user/internal/repository/user"
+	"github.com/elzamin/air_tickets/user/internal/repository"
 	"log"
 )
 
-func TestUserDb(userRepository user_repo.Repository) {
+func TestUserDb(ctx context.Context,userRepository repository.Repository) {
 
-	ctx := context.Background()
 	err := userRepository.TouchTable(ctx)
 	if err != nil {
 		log.Fatal("Failed to touch table user", err)

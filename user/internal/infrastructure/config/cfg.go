@@ -14,7 +14,7 @@ func New(path string) (model.Config, error) {
 
 	return model.Config{
 		Server: model.Server{
-			Host: viper.GetString("server.host"),
+			Host: viper.GetString("server.port"),
 		},
 		Postgres: model.Postgres{
 			Host:     viper.GetString("postgres.host"),

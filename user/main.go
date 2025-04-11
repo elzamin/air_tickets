@@ -1,16 +1,16 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
-	//"net"
-	user_grpc "github.com/elzamin/air_tickets/proto/gen/go"
+
+	pb "github.com/elzamin/air_tickets/proto/gen/go"
 	"github.com/elzamin/air_tickets/user/internal/infrastructure/config"
 	"github.com/elzamin/air_tickets/user/internal/infrastructure/db"
-	user_repo "github.com/elzamin/air_tickets/user/internal/repository/user"
-	//"github.com/elzamin/air_tickets/user/internal/test"
-	"google.golang.org/grpc"
+	"github.com/elzamin/air_tickets/user/internal/repository"
+	"github.com/elzamin/air_tickets/user/internal/test"
 )
 
 func main() {
@@ -23,27 +23,19 @@ func main() {
 	if err != nil {
 		log.Fatal("Failed to create postgres connections", err)
 	}
-	userRepository := user_repo.New(dbConnection)
-	_ = userRepository
+	userRepository := repository.New(dbConnection)
+	ctx := context.Background()
 
-	//test.TestUserDb(userRepository)
+	//test
+	if (0 == 1) {
+		test.TestUserDb(ctx, userRepository)
+	}
 
-	a := user_grpc.GetUserRequest{
+	a := pb.GetUserRequest{
 		Id: "1",
 	}
 	fmt.Println(a.Id)
 
-	//lis, err := net.Listen("tcp", fmt.Sprint("localhost:8080"))
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-	grpcServer, err:= grpc.NewClient("passthrough:///localhost:8081")
-	if err != nil {
-		log.Fatal("Failed to dial the server", err)
-	}
-	defer grpcServer.Close()
-
-	user_grpc.NewUserClient(grpcServer)
 	
 
 	// log.Fatal(http.ListenAndServe(cfg.Server.Host, nil))
