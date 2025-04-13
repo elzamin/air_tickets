@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"net"
+
+	"google.golang.org/grpc"
 
 	pb "github.com/elzamin/air_tickets/proto/gen/go"
 	"github.com/elzamin/air_tickets/user/internal/infrastructure/config"
@@ -12,6 +15,15 @@ import (
 	"github.com/elzamin/air_tickets/user/internal/repository"
 	"github.com/elzamin/air_tickets/user/internal/test"
 )
+
+type server struct {
+	pb.UnimplementedUserServer
+}
+
+func (s *server) CreateUser (_ context.Context, in *pb.CreateUserRequest) (*pb.CreateUserResponse, error) {
+	log.Printf("Received: %v", in.GetUser())
+	return &pb.CreateUserResponse{Error: &pb.Error{Message: "Hello world"}}, nil
+}
 
 func main() {
 	cfg, err := config.New("config/config." + os.Getenv("ENV") + ".yml")
@@ -27,16 +39,22 @@ func main() {
 	ctx := context.Background()
 
 	//test
-	if (0 == 1) {
+	if (1 == 1) {
 		test.TestUserDb(ctx, userRepository)
 	}
 
-	a := pb.GetUserRequest{
-		Id: "1",
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.Server.Port))
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
 	}
-	fmt.Println(a.Id)
 
-	
+	s := grpc.NewServer()
+	pb.RegisterUserServer(s, &server{})
+
+	log.Printf("server listening at %v", lis.Addr())
+	if err := s.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
 
 	// log.Fatal(http.ListenAndServe(cfg.Server.Host, nil))
 }

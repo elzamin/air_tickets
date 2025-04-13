@@ -14,7 +14,12 @@ func TestUserDb(ctx context.Context,userRepository repository.Repository) {
 		log.Fatal("Failed to touch table user", err)
 	}
 
-	err = userRepository.Create(ctx, entity.User{Id: "1", FirstName: "Elzamin", LastName: "Usubaliev"})
+	err = userRepository.Create(ctx, entity.User{
+		Id: "1", 
+		Name: "Elzamin", 
+		Age: 28, 
+		Address: "Presnya", 
+		Work: "Empty"})
 	if err != nil {
 		log.Fatal("Failed to create user", err)
 	}
@@ -25,7 +30,12 @@ func TestUserDb(ctx context.Context,userRepository repository.Repository) {
 	}
 	log.Println(user)
 
-	err = userRepository.Update(ctx, entity.User{Id: "1", FirstName: "Vasya", LastName: "Veseliy"})
+	err = userRepository.Update(ctx, entity.User{
+		Id: "1", 
+		Name: "Valera", 
+		Age: 35, 
+		Address: "Homovniki", 
+		Work: "Police"})
 	if err != nil {
 		log.Fatal("Failed to update user", err)
 	}
@@ -36,7 +46,12 @@ func TestUserDb(ctx context.Context,userRepository repository.Repository) {
 	}
 	log.Println(user)
 
-	err = userRepository.Create(ctx, entity.User{Id: "2", FirstName: "Elzamin", LastName: "Usubaliev"})
+	err = userRepository.Create(ctx, entity.User{
+		Id: "2", 
+		Name: "Elzamin", 
+		Age: 28, 
+		Address: "Presnya", 
+		Work: "Empty"})
 	if err != nil {
 		log.Fatal("Failed to create user", err)
 	}

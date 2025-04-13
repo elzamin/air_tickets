@@ -17,13 +17,13 @@ func New(path string) (model.Config, error) {
 			Port: viper.GetString("server.port"),
 		},
 		Client_user: model.Client{
-			Port:     viper.GetString("client.port"),
+			Port:     viper.GetString("grpc_user.port"),
 		},
 		Client_warehouse: model.Client{
-			Port:     viper.GetString("client.port"),
+			Port:     viper.GetString("grpc_warehouse.port"),
 		},
 		Client_order: model.Client{
-			Port:     viper.GetString("client.port"),
+			Port:     viper.GetString("grpc_order.port"),
 		},
 	}, nil
 }

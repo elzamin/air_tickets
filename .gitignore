@@ -26,3 +26,4 @@ go.work.sum
 pgdata
 config.local.yml
 user/user
+gateway/gateway
