@@ -1,13 +1,13 @@
-package test
+package user
 
 import (
 	"context"
-	"github.com/elzamin/air_tickets/user/internal/entity"
-	"github.com/elzamin/air_tickets/user/internal/repository"
 	"log"
+
+	"github.com/elzamin/air_tickets/user/internal/entity"
 )
 
-func TestUserDb(ctx context.Context,userRepository repository.Repository) {
+ func TestUserDb(ctx context.Context,userRepository *repository) {
 
 	err := userRepository.TouchTable(ctx)
 	if err != nil {

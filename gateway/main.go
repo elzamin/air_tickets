@@ -28,7 +28,15 @@ func main() {
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.CreateUser(ctx, &pb.CreateUserRequest{})
+	r, err := c.CreateUser(ctx, &pb.CreateUserRequest{
+		User: &pb.UserDTO{
+			Id: "1",
+			Name: "Dmitriy",
+			Age: 22,
+			Address: "Kitay-gorod",
+			Work: "Doctor",
+		},
+	})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}

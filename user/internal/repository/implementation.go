@@ -1,4 +1,4 @@
-package repository
+package user
 
 import (
 	"context"
@@ -13,10 +13,10 @@ type repository struct {
 }
 
 func New(
-	db *pgxpool.Pool,
-) Repository {
+	pool *pgxpool.Pool,
+) *repository {
 	return &repository{
-		db: db,
+		db: pool,
 	}
 }
 
