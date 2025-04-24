@@ -27,12 +27,12 @@ func main() {
 	userRepository := userRepo.New(dbConnection)
 	userService := userService.New(userRepository)
 	userServer := api.New(userService)
-	
+
 	//test
-	if (0 == 1) {
+	if 0 == 1 {
 		userRepo.TestUserDb(ctx, userRepository)
 	}
 
 	api.RunGRPCServer(cfg.Server.Port, userServer)
-	
+
 }

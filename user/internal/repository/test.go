@@ -7,7 +7,7 @@ import (
 	"github.com/elzamin/air_tickets/user/internal/entity"
 )
 
- func TestUserDb(ctx context.Context,userRepository *repository) {
+func TestUserDb(ctx context.Context, userRepository *repository) {
 
 	err := userRepository.TouchTable(ctx)
 	if err != nil {
@@ -15,11 +15,11 @@ import (
 	}
 
 	err = userRepository.Create(ctx, entity.User{
-		Id: "1", 
-		Name: "Elzamin", 
-		Age: 28, 
-		Address: "Presnya", 
-		Work: "Empty"})
+		Id:      "1",
+		Name:    "Elzamin",
+		Age:     28,
+		Address: "Presnya",
+		Work:    "Empty"})
 	if err != nil {
 		log.Fatal("Failed to create user", err)
 	}
@@ -31,11 +31,11 @@ import (
 	log.Println(user)
 
 	err = userRepository.Update(ctx, entity.User{
-		Id: "1", 
-		Name: "Valera", 
-		Age: 35, 
-		Address: "Homovniki", 
-		Work: "Police"})
+		Id:      "1",
+		Name:    "Valera",
+		Age:     35,
+		Address: "Homovniki",
+		Work:    "Police"})
 	if err != nil {
 		log.Fatal("Failed to update user", err)
 	}
@@ -47,11 +47,11 @@ import (
 	log.Println(user)
 
 	err = userRepository.Create(ctx, entity.User{
-		Id: "2", 
-		Name: "Elzamin", 
-		Age: 28, 
-		Address: "Presnya", 
-		Work: "Empty"})
+		Id:      "2",
+		Name:    "Elzamin",
+		Age:     28,
+		Address: "Presnya",
+		Work:    "Empty"})
 	if err != nil {
 		log.Fatal("Failed to create user", err)
 	}

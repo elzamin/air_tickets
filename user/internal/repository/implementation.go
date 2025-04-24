@@ -61,10 +61,10 @@ func (r *repository) Get(ctx context.Context, id string) (entity.User, error) {
 
 	var user entity.User
 	err := row.Scan(
-		&user.Id, 
-		&user.Name, 
-		&user.Age, 
-		&user.Address, 
+		&user.Id,
+		&user.Name,
+		&user.Age,
+		&user.Address,
 		&user.Work)
 	if err != nil {
 		return entity.User{}, err
@@ -87,7 +87,7 @@ func (r *repository) GetAll(ctx context.Context) ([]entity.User, error) {
 	for rows.Next() {
 		var user entity.User
 		err = rows.Scan(
-			&user.Id, 
+			&user.Id,
 			&user.Name,
 			&user.Age,
 			&user.Address,

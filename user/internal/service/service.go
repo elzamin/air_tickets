@@ -27,22 +27,22 @@ type UserRepository interface {
 	Delete(ctx context.Context, id string) error
 }
 
-func (s *Service) Create (ctx context.Context, user entity.User) error{
+func (s *Service) Create(ctx context.Context, user entity.User) error {
 	return s.userRepository.Create(ctx, user)
 }
 
-func (s *Service) Get (ctx context.Context, id string) (entity.User, error){
+func (s *Service) Get(ctx context.Context, id string) (entity.User, error) {
 	return s.userRepository.Get(ctx, id)
 }
 
-func (s *Service) GetAll (ctx context.Context) ([]entity.User, error){
+func (s *Service) GetAll(ctx context.Context) ([]entity.User, error) {
 	return s.userRepository.GetAll(ctx)
 }
 
-func (s *Service) Update (ctx context.Context, user entity.User) error{
+func (s *Service) Update(ctx context.Context, user entity.User) error {
 	return s.userRepository.Update(ctx, user)
 }
 
-func (s *Service) Delete (ctx context.Context, id string) error{
+func (s *Service) Delete(ctx context.Context, id string) error {
 	return s.userRepository.Delete(ctx, id)
 }
