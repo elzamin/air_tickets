@@ -1,4 +1,4 @@
-package user
+package repository
 
 import (
 	"context"
@@ -34,7 +34,7 @@ func (r *repository) TouchTable(ctx context.Context) error {
 		)
 		`,
 	)
-
+	
 	return err
 }
 

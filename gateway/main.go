@@ -1,44 +1,26 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
-	"context"
-	"time"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-
-	pb "github.com/elzamin/air_tickets/proto/gen/go"
+	"github.com/elzamin/air_tickets/gateway/internal/api"
+	"github.com/elzamin/air_tickets/gateway/internal/client"
+	//"github.com/elzamin/air_tickets/gateway/internal/entity"
 	"github.com/elzamin/air_tickets/gateway/internal/infrastructure/config"
+	//pb "github.com/elzamin/air_tickets/proto/gen/go"
 )
 
 func main() {
+	ctx := context.Background()
 	cfg, err := config.New("config/config." + os.Getenv("ENV") + ".yml")
 	if err != nil {
 		log.Fatal("Failed to init a config", err)
 	}
 
-	conn, err := grpc.NewClient("localhost:" + cfg.Client_user.Port, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalf("did not connect: %v", err)
-	}
-	defer conn.Close()
-	c := pb.NewUserClient(conn)
-
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
-	r, err := c.CreateUser(ctx, &pb.CreateUserRequest{
-		User: &pb.UserDTO{
-			Id: "1",
-			Name: "Dmitriy",
-			Age: 22,
-			Address: "Kitay-gorod",
-			Work: "Doctor",
-		},
-	})
-	if err != nil {
-		log.Fatalf("could not greet: %v", err)
-	}
-	log.Printf("Greeting: %s", r.GetError().Message)
+	uc := client.ConnectToUserGRPC(cfg.Client_user.Port)
+	gateClient := client.New(uc)
+	gateServer := api.New(gateClient)
+	gateServer.RunHTTPServer(ctx)
 }
