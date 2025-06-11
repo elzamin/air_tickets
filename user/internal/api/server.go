@@ -47,11 +47,12 @@ func (s *Server) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*pb.
 
 	err := s.userSvc.Create(ctx, user)
 	if err != nil {
-		return &pb.CreateUserResponse{Error: &pb.Error{Message: err.Error()}}, nil
-		//return nil, status.New(codes.Internal, "Error").Err()
+		return nil, err
+		//return &pb.CreateUserResponse{Error: &pb.Error{Message: err.Error()}}, nil
 	}
 
-	return &pb.CreateUserResponse{Error: &pb.Error{Message: "Created ID" + in.GetUser().GetId()}}, nil
+	return nil, nil
+	//return &pb.CreateUserResponse{Error: &pb.Error{Message: "Created ID: '" + in.GetUser().GetId() + "'"}}, nil
 }
 
 func (s *Server) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
@@ -70,7 +71,7 @@ func (s *Server) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUse
 			Address: user.Address,
 			Work:    user.Work,
 		},
-	}, err
+	}, nil
 }
 
 func (s *Server) GetUsers(ctx context.Context, in *pb.GetUsersRequest) (*pb.GetUsersResponse, error) {
@@ -109,10 +110,12 @@ func (s *Server) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*pb.
 
 	err := s.userSvc.Update(ctx, user)
 	if err != nil {
-		return &pb.UpdateUserResponse{Error: &pb.Error{Message: err.Error()}}, nil
+		return nil, err
+		//return &pb.UpdateUserResponse{Error: &pb.Error{Message: err.Error()}}, nil
 	}
 
-	return &pb.UpdateUserResponse{Error: &pb.Error{Message: "Updated ID" + in.GetUser().GetId()}}, nil
+	return nil, nil
+	//return &pb.UpdateUserResponse{Error: nil}, nil
 }
 
 func (s *Server) DeleteUser(ctx context.Context, in *pb.DeleteUserRequest) (*pb.DeleteUserResponse, error) {
@@ -120,10 +123,11 @@ func (s *Server) DeleteUser(ctx context.Context, in *pb.DeleteUserRequest) (*pb.
 
 	err := s.userSvc.Delete(ctx, in.GetId())
 	if err != nil {
-		return &pb.DeleteUserResponse{Error: &pb.Error{Message: err.Error()}}, nil
+		return nil, err
+		//return &pb.DeleteUserResponse{Error: &pb.Error{Message: err.Error()}}, nil
 	}
-
-	return &pb.DeleteUserResponse{Error: &pb.Error{Message: "Deleted ID" + in.GetId()}}, nil
+	return nil, nil
+	//return &pb.DeleteUserResponse{Error: nil}, nil
 }
 
 func RunGRPCServer(port string, testServer *Server) {

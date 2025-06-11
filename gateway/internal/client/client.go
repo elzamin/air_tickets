@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-	"errors"
 	"log"
 
 	"google.golang.org/grpc"
@@ -29,13 +28,12 @@ func ConnectToUserGRPC(port string) pb.UserClient{
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
-	//defer conn.Close()
 	log.Printf("Connected to User [port: %s]", port)
 	return pb.NewUserClient(conn)
 }
 
 func (c *Client) Create (ctx context.Context, user entity.User) error {
-	r, err := c.uc.CreateUser(ctx, &pb.CreateUserRequest{
+	_, err := c.uc.CreateUser(ctx, &pb.CreateUserRequest{
 		User: &pb.UserDTO{
 			Id:      user.Id,
 			Name:    user.Name,
@@ -45,17 +43,15 @@ func (c *Client) Create (ctx context.Context, user entity.User) error {
 		},
 	})
 	if err != nil {
-		log.Printf("Response with error: %s", err.Error())
 		return err
 	}
 	
-	return errors.New(r.GetError().Message)
+	return nil
 }
 
 func (c *Client) Get (ctx context.Context, id string) (entity.User, error) {
 	r, err := c.uc.GetUser(ctx, &pb.GetUserRequest{Id: id})
 	if err != nil {
-		log.Printf("Response with error: %s", err.Error())
 		return entity.User{}, err
 	}
 
@@ -67,15 +63,31 @@ func (c *Client) Get (ctx context.Context, id string) (entity.User, error) {
 		Work: r.User.Work,
 	}
 
-	return user, err
+	return user, nil
 }
 
 func (c *Client) Delete (ctx context.Context, id string) error {
 	_, err := c.uc.DeleteUser(ctx, &pb.DeleteUserRequest{Id: id})
 	if err != nil {
-		log.Printf("Response with error: %s", err.Error())
 		return err
 	}
 
+	return nil
+}
+
+func (c *Client) Update (ctx context.Context, user entity.User) error {
+	_, err := c.uc.UpdateUser(ctx, &pb.UpdateUserRequest{
+		User: &pb.UserDTO{
+			Id:      user.Id,
+			Name:    user.Name,
+			Age:     int32(user.Age),
+			Address: user.Address,
+			Work:    user.Work,
+		},
+	})
+	if err != nil {
+		return err
+	}
+	
 	return nil
 }

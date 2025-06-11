@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 
 	"github.com/elzamin/air_tickets/user/internal/entity"
 
@@ -67,7 +68,7 @@ func (r *repository) Get(ctx context.Context, id string) (entity.User, error) {
 		&user.Address,
 		&user.Work)
 	if err != nil {
-		return entity.User{}, err
+		return entity.User{}, errors.New("DB.Scan fail: ")
 	}
 
 	return user, nil

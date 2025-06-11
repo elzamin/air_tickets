@@ -20,24 +20,17 @@ message UserDTO {
     string work = 5;
 }
 
-message Error {
-    string message = 1;
-}
-
 message GetUsersRequest {}
 
 message GetUsersResponse {
     repeated UserDTO users = 1;
-    Error error = 2;
 }
 
 message CreateUserRequest {
     UserDTO user = 1;
 }
 
-message CreateUserResponse {
-    Error error = 1;
-}
+message CreateUserResponse {}
 
 message GetUserRequest {
     string id = 1;
@@ -45,24 +38,16 @@ message GetUserRequest {
 
 message GetUserResponse {
     UserDTO user = 1;
-    Error error = 2;
 }
 
 message DeleteUserRequest{
     string id = 1;
 }
 
-message DeleteUserResponse{
-    Error error = 1;
-}
+message DeleteUserResponse{}
 
 message UpdateUserRequest{
     UserDTO user = 1;
 }
 
-message UpdateUserResponse{
-    UserDTO user = 1;
-    Error error = 2;
-}
-
-
+message UpdateUserResponse{}
