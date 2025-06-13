@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	//"net/http"
 
 	"github.com/elzamin/air_tickets/gateway/internal/entity"
 	"github.com/gin-gonic/gin"
@@ -15,6 +14,7 @@ type Server struct{
 type Client interface {
 	Create (ctx context.Context, user entity.User) error
 	Get (ctx context.Context, id string) (entity.User, error)
+	GetAll (ctx context.Context) ([]entity.User, error)
 	Delete (ctx context.Context, id string) error
 	Update (ctx context.Context, user entity.User) error
 }
@@ -33,6 +33,7 @@ func (s *Server) RunHTTPServer() {
 	router.GET("/", home)
 	router.GET("/ping", ping)
 	router.GET("/id/:id", s.get)
+	router.GET("/all", s.getAll)
 	router.POST("/create", s.create)
 	router.DELETE("/delete/:id", s.delete)
 	router.PATCH("/update", s.update)
@@ -58,6 +59,16 @@ func (s *Server) get (c *gin.Context) {
 		c.String(400, err.Error())
 	} else {
 		c.JSON(200, user)
+	}
+}
+
+func (s *Server) getAll (c *gin.Context) {
+	ctx := context.Background()
+	users, err := s.cl.GetAll(ctx)
+	if err != nil{
+		c.String(400, err.Error())
+	} else {
+		c.JSON(200, users)
 	}
 }
 

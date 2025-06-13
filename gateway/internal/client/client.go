@@ -66,6 +66,27 @@ func (c *Client) Get (ctx context.Context, id string) (entity.User, error) {
 	return user, nil
 }
 
+func (c *Client) GetAll (ctx context.Context) ([]entity.User, error) {
+	r, err := c.uc.GetUsers(ctx, &pb.GetUsersRequest{})
+	if err != nil {
+		return nil, err
+	}
+
+	var users []entity.User
+	for _, el := range r.Users{
+		user := entity.User{
+			Id: el.Id, 
+			Name: el.Name, 
+			Age: int(el.Age),
+			Address: el.Address,
+			Work: el.Work,
+		}
+		users = append(users, user)
+	}
+
+	return users, nil
+}
+
 func (c *Client) Delete (ctx context.Context, id string) error {
 	_, err := c.uc.DeleteUser(ctx, &pb.DeleteUserRequest{Id: id})
 	if err != nil {

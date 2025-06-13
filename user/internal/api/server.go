@@ -7,8 +7,6 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
-	//"google.golang.org/grpc/codes"
-	//"google.golang.org/grpc/status"
 
 	pb "github.com/elzamin/air_tickets/proto/gen/go"
 	"github.com/elzamin/air_tickets/user/internal/entity"
@@ -48,11 +46,9 @@ func (s *Server) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*pb.
 	err := s.userSvc.Create(ctx, user)
 	if err != nil {
 		return nil, err
-		//return &pb.CreateUserResponse{Error: &pb.Error{Message: err.Error()}}, nil
 	}
 
 	return nil, nil
-	//return &pb.CreateUserResponse{Error: &pb.Error{Message: "Created ID: '" + in.GetUser().GetId() + "'"}}, nil
 }
 
 func (s *Server) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
@@ -111,11 +107,9 @@ func (s *Server) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*pb.
 	err := s.userSvc.Update(ctx, user)
 	if err != nil {
 		return nil, err
-		//return &pb.UpdateUserResponse{Error: &pb.Error{Message: err.Error()}}, nil
 	}
 
 	return nil, nil
-	//return &pb.UpdateUserResponse{Error: nil}, nil
 }
 
 func (s *Server) DeleteUser(ctx context.Context, in *pb.DeleteUserRequest) (*pb.DeleteUserResponse, error) {
@@ -124,10 +118,8 @@ func (s *Server) DeleteUser(ctx context.Context, in *pb.DeleteUserRequest) (*pb.
 	err := s.userSvc.Delete(ctx, in.GetId())
 	if err != nil {
 		return nil, err
-		//return &pb.DeleteUserResponse{Error: &pb.Error{Message: err.Error()}}, nil
 	}
 	return nil, nil
-	//return &pb.DeleteUserResponse{Error: nil}, nil
 }
 
 func RunGRPCServer(port string, testServer *Server) {
